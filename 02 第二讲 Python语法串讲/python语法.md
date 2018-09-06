@@ -50,3 +50,126 @@ f=(1,2,3)
 * 修改:字典名 [ 键 ] = 新值
 * 删除:del 字典名[ 键 ]
 * 插入:字典名[ 新键 ] = 新值
+
+## 4 条件语句
+
+```
+if
+  条件 1 成立 :执行任务 1
+elif
+  条件 2 成立 :可往文本里写内容执行任务 2
+┊
+elif
+  条件 n 成立 :执行任务 n
+else :
+  执行任务 n+1
+```
+
+## 5 循环语句
+
+### 5.1 for语句1
+
+```
+for 变量 in range (变量开始值,变量结束值):
+    执行某些任务
+```
+
+```
+>>> for i in range(0,5):
+...     print "当前的数值是：%s" %i
+...
+当前的数值是：0
+当前的数值是：1
+当前的数值是：2
+当前的数值是：3
+当前的数值是：4
+```
+### 5.2 for语句2
+
+```
+for 变量 in 变量列表名:
+    执行某些任务
+```
+
+```
+>>> h=["a","b","c","d"]
+>>> for i in h:
+...     print i
+...
+a
+b
+c
+d
+```
+
+### 5.3 while循环
+
+```
+while 条件:
+    执行某些任务
+```
+
+```
+>>> x=1
+>>> y=2
+>>> while x<5 and y<5:
+...     x=x+1
+...     y=y+1
+...     print x,y
+...
+2 3
+3 4
+4 5
+```
+
+## 6 turtle模块
+
+```
+import turtle #导入 turtle 模块
+t = turtle.Pen ( ) #用 turtle 模块中的 Pen 类,实例化出一个叫做 t 的对象
+t.forward (像素点) #让 t 向前走多少个像素点
+t.backward (像素点) #让 t 向后走多少个像素点
+t.left (角度) #让 t 左转多少角度
+t.right (角度) #让 t 右转多少角度
+t.reset ( ) #让 t 复位
+```
+
+## 7 文件操作
+
+### 7.1 写文件
+
+* 开:文件变量 = open(”文件路径文件名”, ”wb”)
+* 存:pickle.dump(待写入的变量,文件变量)
+* 关:文件变量.close()
+
+```
+>>> import pickle
+>>> data = {"a":"xxxx","b":"yyyyy"}
+>>> save_file = open("save.dat","wb")
+>>> pickle.dump(data ,save_file)
+>>> save_file.close()
+>>> exit()
+
+```
+
+### 7.2 读文件
+
+* 开:文件变量 = open(”文件路径文件名”, ”rb”)
+* 取:放内容的变量 = pickle.load(文件变量)
+* 关:文件变量.close()
+
+```
+>>> import pickle
+>>> load_file = open("save.dat","rb")
+>>> data = pickle.load(load_file)
+>>> load_file.close()
+>>> data
+{'a': 'xxxx', 'b': 'yyyyy'}
+>>> 
+
+```
+
+
+
+
+
