@@ -1,7 +1,8 @@
-# 安装Tensorfow
+# Tensorflow安装
 
 ## 1 安装python包管理工具pip
-```
+
+```bash
 $ sudo apt-get install python-dev python-pip
 ```
 
@@ -64,6 +65,7 @@ Installing collected packages: numpy, funcsigs, pbr, mock, protobuf, backports.w
   Running setup.py install for html5lib ... done
 Successfully installed backports.weakref-1.0.post1 bleach-1.5.0 funcsigs-1.0.2 html5lib-0.9999999 markdown-2.6.11 mock-2.0.0 numpy-1.15.0 pbr-4.2.0 protobuf-3.6.1 tensorflow-1.3.0 tensorflow-tensorboard-0.1.8 werkzeug-0.14.1
 ```
+
 ## 3 测试
 
 ```
