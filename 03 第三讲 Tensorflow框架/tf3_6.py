@@ -2,8 +2,8 @@
 #0导入模块，生成模拟数据集
 import tensorflow as tf
 import numpy as np
-BATCH_SIZE = 8
-seed = 23455
+BATCH_SIZE = 8   #一次喂入8组数据给神经网络
+seed = 23455   # 随机种子
 
 #基于seed产生随机数
 rng = np.random.RandomState(seed)
@@ -16,7 +16,7 @@ print "X:\n",X
 print "Y:'n",Y
 
 #1定义神经网络的输入、参数和输出，定义前向传播过程
-x = tf.placeholder(tf.float32,shape=(None,2))
+x = tf.placeholder(tf.float32,shape=(None,2))   #并不知道有多少组数据，所以写None，每组有两个数据，y_类似
 y_ = tf.placeholder(tf.float32,shape=(None,1))
 
 #w1 2行3列 ，w2：3行1列
@@ -46,11 +46,13 @@ with tf.Session() as sess:
     for i in range(STEPS):
         start = (i*BATCH_SIZE) % 32
         end = start + BATCH_SIZE
-        sess.run(train_step,feed_dict={x: X[start:end],y_: Y[start:end]})
+        sess.run(train_step, feed_dict={x: X[start:end], y_: Y[start:end]})
+        
+        # 没500轮打印一次loss值
         if i % 500 == 0:
-            total_loss = sess.run(train_step,feed_dict={x:X,y_:Y})
-           # print("After %d training step(s),loss on all data is %g" % (i,total_loss))
-
+            total_loss = sess.run(loss, feed_dict={x: X, y_: Y})
+            print("After %d training step(s), loss on all data is %g" %(i, total_loss))
+           
     # 输出训练后的参赛取值
     print "\n"
     print "w1:\n",sess.run(w1)
