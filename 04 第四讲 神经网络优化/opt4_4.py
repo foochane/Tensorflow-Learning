@@ -1,4 +1,5 @@
 #coding:utf-8
+# 损失函数
 #设损失函数 loss=(w+1)^2, 令w初值是常数5。反向传播就是求最优w，即求最小loss对应的w值
 import tensorflow as tf
 #定义待优化参数w初值赋5
