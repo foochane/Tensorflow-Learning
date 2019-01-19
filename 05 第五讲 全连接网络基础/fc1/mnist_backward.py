@@ -66,6 +66,7 @@ def backward(mnist):
 
 
 def main():
+    # 第一个参数表示数据集存放路径,第二个参数表示数据集的存取形式。当第二个参数为 Ture 时,表示以独热码形式存取数据集
     mnist = input_data.read_data_sets("./data/", one_hot=True)
     backward(mnist)
 
