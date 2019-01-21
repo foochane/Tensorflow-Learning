@@ -5,14 +5,14 @@ import mnist_lenet5_forward
 import os
 import numpy as np
 
-BATCH_SIZE = 100
+BATCH_SIZE = 100 # 一个 batch 的数量
 LEARNING_RATE_BASE =  0.005 
-LEARNING_RATE_DECAY = 0.99 
-REGULARIZER = 0.0001 
-STEPS = 50000 
-MOVING_AVERAGE_DECAY = 0.99 
-MODEL_SAVE_PATH="./model/" 
-MODEL_NAME="mnist_model" 
+LEARNING_RATE_DECAY = 0.99 # 学习率的衰减率
+REGULARIZER = 0.0001 # 正则化项的权重
+STEPS = 50000 # 最大迭代次数
+MOVING_AVERAGE_DECAY = 0.99  # 滑动平均的衰减率
+MODEL_SAVE_PATH="./model/" # 保存模型的路径
+MODEL_NAME="mnist_model" # 模型命名
 
 def backward(mnist):
     x = tf.placeholder(tf.float32,[
@@ -24,10 +24,14 @@ def backward(mnist):
     y = mnist_lenet5_forward.forward(x,True, REGULARIZER) 
     global_step = tf.Variable(0, trainable=False) 
 
+    # 先是对网络最后一层的输出 y 做 softmax,通常是求取输出属于某一类的概率,其实就是一个num_classes 大小的向量,
+    # 再将此向量和实际标签值做交叉熵,需要说明的是该函数返回的是一个向量
     ce = tf.nn.sparse_softmax_cross_entropy_with_logits(logits=y, labels=tf.argmax(y_, 1))
-    cem = tf.reduce_mean(ce) 
-    loss = cem + tf.add_n(tf.get_collection('losses')) 
+    cem = tf.reduce_mean(ce) # 再对得到的向量求均值就得到 loss
+    loss = cem + tf.add_n(tf.get_collection('losses')) # 添加正则化中的 losses
 
+    # 实现指数级的减小学习率,可以让模型在训练的前期快速接近较优解,又可以保证模型在训练后期不会有太大波动
+    # 计算公式:decayed_learning_rate=learining_rate*decay_rate^(global_step/decay_steps)
     learning_rate = tf.train.exponential_decay( 
         LEARNING_RATE_BASE,
         global_step,
@@ -37,6 +41,7 @@ def backward(mnist):
     
     train_step = tf.train.GradientDescentOptimizer(learning_rate).minimize(loss, global_step=global_step)
 
+    # 就是相应变量的初始值,每次变量更新时,影子变量就会随之更新
     ema = tf.train.ExponentialMovingAverage(MOVING_AVERAGE_DECAY, global_step)
     ema_op = ema.apply(tf.trainable_variables())
     with tf.control_dependencies([train_step, ema_op]): 
